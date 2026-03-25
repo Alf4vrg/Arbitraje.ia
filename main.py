@@ -111,7 +111,17 @@ encabezados = [[
     "decision"
 ]]
 
-sheet.update("A1", encabezados + candidatos)
+from datetime import datetime
+
+ahora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+resumen = [
+    ["Última ejecución:", ahora],
+    ["Total candidatos:", len(candidatos)],
+    [""]
+]
+
+sheet.update("A1", resumen + encabezados + candidatos)
 
 print("Datos enviados a Google Sheets")
 print("Total:", len(candidatos)) 
