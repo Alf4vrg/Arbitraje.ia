@@ -63,16 +63,16 @@ def filtrar_productos(productos):
 
 def evaluar_decision(margen, rating, precio, descuento):
     if (
-        margen >= 25 and
+        margen >= 20 and
         rating >= 4.0 and
-        precio <= 200 and
+        precio <= 250 and
         descuento >= 5
     ):
         return "🔥 OPORTUNIDAD"
     elif (
-        margen >= 18 and
-        rating >= 3.8 and
-        precio <= 250
+        margen >= 12 and
+        rating >= 3.5 and
+        precio <= 3000
     ):
         return "⚠️ MEDIA"
     else:
