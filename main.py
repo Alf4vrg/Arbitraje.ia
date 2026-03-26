@@ -145,7 +145,7 @@ def subir_datos(live_sheet, historico_sheet, candidatos):
         ["Última ejecución:", ahora],
         ["Fuente:", "dummyjson"],
         ["Total candidatos:", len(candidatos)],
-        ["Filtro activo:", "margen>=25, rating>=4.0, precio<=200, descuento>=5, solo smartphones/laptops"],
+        ["Filtro activo:", "margen>=20, rating>=4.0, precio<=250, descuento>=5, solo beauty/fragrances"],
         [""]
     ]
 
