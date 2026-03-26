@@ -25,6 +25,7 @@ for p in productos:
     rating = p["rating"]
 
     # filtro de categoría
+    categoria = p["category"].lower()
     if "smartphone" not in categoria and "laptop" not in categoria:
         continue
 
