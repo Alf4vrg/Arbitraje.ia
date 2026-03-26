@@ -20,9 +20,13 @@ candidatos = []
 for p in productos:
     titulo = p["title"]
     precio = p["price"]
+    categoria = p["category"]
     descuento = p["discountPercentage"]
     rating = p["rating"]
-    categoria = p["category"]
+
+    # 🔥 FILTRO AQUÍ (ANTES DE TODO)
+    if "smartphone" not in categoria and "laptop" not in categoria: 
+    continue
 
     precio_venta = precio * 1.4
     ganancia = precio_venta - precio
@@ -58,6 +62,7 @@ else:
 
 candidatos.append([
     titulo,
+    categoria,
     round(precio, 2),
     round(precio_base, 2),
     round(precio_venta, 2),
@@ -118,6 +123,7 @@ live_sheet.clear()
 
 encabezados = [[
     "producto",
+    "categoria",
     "precio_compra",
     "precio_base",
     "precio_venta",
@@ -136,7 +142,7 @@ resumen = [
     ["Última ejecución:", ahora],
     ["Fuente:", "dummyjson"],
     ["Total candidatos:", len(candidatos)],
-    ["Filtro activo:", "descuento>10, rating>=4, precio<100, ganancia>5, margen>25"],
+    ["Filtro activo:", "margen>=30, rating>=4.3, precio<=150, descuento>=10, solo electronica"],
     [""]
 ]
 
