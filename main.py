@@ -179,7 +179,7 @@ def manejar_historico(historico_sheet, candidatos, ahora):
     # Limpiar registros con más de 30 días
     limpiar_historico(historico_sheet, historico_data)
 
-def limpiar_historico(historico_sheet, historico_data):
+def limpiar_historico(historico_sheet, historico_data, encabezado_historico):
     if len(historico_data) > 1:
         filas_validas = []
         limite = datetime.now() - timedelta(days=30)
