@@ -16,6 +16,7 @@ def obtener_productos():
 
 def filtrar_productos(productos):
     candidatos = []
+    print(sorted(set(p["category"] for p in productos)))
     for p in productos:
         titulo = p["title"]
         precio = p["price"]
@@ -24,7 +25,15 @@ def filtrar_productos(productos):
         rating = p["rating"]
 
         # Filtrar por categoría
-        pass
+        categorias_validas = [
+            "smartphones",
+            "laptops",
+            "mobile-accessories",
+            "tablets"
+        ]
+
+        if categoria not in categorias_validas:
+            continue
 
         precio_venta = precio * 1.4
         ganancia = precio_venta - precio
