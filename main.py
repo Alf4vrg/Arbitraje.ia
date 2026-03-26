@@ -28,13 +28,12 @@ for p in productos:
     ganancia = precio_venta - precio
     margen = (ganancia / precio) * 100
 
-    if (
-        descuento > 10 and
-        rating >= 4.0 and
-        precio < 100 and
-        ganancia > 5 and
-        margen > 25
-    ):
+if (
+    margen >= 30 and
+    rating >= 4.3 and
+    precio <= 150 and
+    descuento >= 10
+):
         precio_base = precio / (1 - descuento / 100)
 
 demanda_score = rating * 20
@@ -45,10 +44,17 @@ indice_compra = (
     (rating * 10) * 0.3
 )
 
-if indice_compra > 35:
-    decision = "COMPRAR"
+if (
+    margen >= 30 and
+    rating >= 4.3 and
+    precio <= 150 and
+    descuento >= 10
+):
+    decision = "🔥 OPORTUNIDAD"
+elif margen >= 20:
+    decision = "⚠️ MEDIA"
 else:
-    decision = "IGNORAR"
+    decision = "❌ DESCARTAR"
 
 candidatos.append([
     titulo,
