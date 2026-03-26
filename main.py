@@ -26,7 +26,7 @@ for p in productos:
 
     # filtro de categoría
     categoria = p["category"].lower()
-    if "smartphone" not in categoria and "laptop" not in categoria:
+    if categoria not in ["smartphones", "laptops"]:
         continue
 
     precio_venta = precio * 1.4
@@ -43,13 +43,13 @@ for p in productos:
     )
 
     if (
-        margen >= 30 and
-        rating >= 4.3 and
-        precio <= 150 and
-        descuento >= 10
+        margen >= 25 and
+        rating >= 4.0 and
+        precio <= 200 and
+        descuento >= 5
     ):
         decision = "🔥 OPORTUNIDAD"
-    elif margen >= 20:
+    elif margen >= 15:
         decision = "⚠️ MEDIA"
     else:
         decision = "❌ DESCARTAR"
