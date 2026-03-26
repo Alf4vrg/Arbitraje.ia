@@ -177,7 +177,7 @@ def manejar_historico(historico_sheet, candidatos, ahora):
         historico_sheet.insert_rows(filas_historico, row=2)
 
     # Limpiar registros con más de 30 días
-    limpiar_historico(historico_sheet, historico_data)
+    limpiar_historico(historico_sheet, historico_data, encabezado_historico)
 
 def limpiar_historico(historico_sheet, historico_data, encabezado_historico):
     if len(historico_data) > 1:
