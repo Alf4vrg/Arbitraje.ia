@@ -2,7 +2,7 @@ import json
 import os
 import requests
 import gspread
-from datetime import datetime
+from datetime import datetime, timedelta
 from google.oauth2.service_account import Credentials
 
 # -----------------------------
@@ -156,8 +156,29 @@ if not historico_data or historico_data[0][0] != "timestamp":
         "decision"
     ])
 
-for fila in candidatos:
-    historico_sheet.append_row([ahora] + fila)
+filas_historico = [[ahora] + fila for fila in candidatos]
+
+# limpiar registros con más de 30 días
+historico_data = historico_sheet.get_all_values()
+
+if historico_data:
+    encabezado_historico = historico_data[0]
+    filas_validas = []
+    limite = datetime.now() - timedelta(days=30)
+
+    for fila in historico_data[1:]:
+        if not fila or not fila[0].strip():
+            continue
+
+        try:
+            fecha_fila = datetime.strptime(fila[0], "%Y-%m-%d %H:%M:%S")
+            if fecha_fila >= limite:
+                filas_validas.append(fila)
+        except:
+            continue
+
+    historico_sheet.clear()
+    historico_sheet.update("A1", [encabezado_historico] + filas_validas)
 
 print("Datos enviados a Google Sheets")
 print("Total:", len(candidatos)) 
