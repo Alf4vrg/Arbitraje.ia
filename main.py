@@ -24,56 +24,49 @@ for p in productos:
     descuento = p["discountPercentage"]
     rating = p["rating"]
 
-    # 🔥 FILTRO AQUÍ (ANTES DE TODO)
-    if "smartphone" not in categoria and "laptop" not in categoria: 
-    continue
+    # filtro de categoría
+    if "smartphone" not in categoria and "laptop" not in categoria:
+        continue
 
     precio_venta = precio * 1.4
     ganancia = precio_venta - precio
     margen = (ganancia / precio) * 100
+    precio_base = precio / (1 - descuento / 100)
 
-if (
-    margen >= 30 and
-    rating >= 4.3 and
-    precio <= 150 and
-    descuento >= 10
-):
-        precio_base = precio / (1 - descuento / 100)
+    demanda_score = rating * 20
 
-demanda_score = rating * 20
+    indice_compra = (
+        margen * 0.4 +
+        descuento * 0.3 +
+        (rating * 10) * 0.3
+    )
 
-indice_compra = (
-    margen * 0.4 +
-    descuento * 0.3 +
-    (rating * 10) * 0.3
-)
+    if (
+        margen >= 30 and
+        rating >= 4.3 and
+        precio <= 150 and
+        descuento >= 10
+    ):
+        decision = "🔥 OPORTUNIDAD"
+    elif margen >= 20:
+        decision = "⚠️ MEDIA"
+    else:
+        decision = "❌ DESCARTAR"
 
-if (
-    margen >= 30 and
-    rating >= 4.3 and
-    precio <= 150 and
-    descuento >= 10
-):
-    decision = "🔥 OPORTUNIDAD"
-elif margen >= 20:
-    decision = "⚠️ MEDIA"
-else:
-    decision = "❌ DESCARTAR"
-
-candidatos.append([
-    titulo,
-    categoria,
-    round(precio, 2),
-    round(precio_base, 2),
-    round(precio_venta, 2),
-    round(ganancia, 2),
-    round(margen, 2),
-    round(descuento, 2),
-    round(rating, 2),
-    round(demanda_score, 2),
-    round(indice_compra, 2),
-    decision
-])
+    candidatos.append([
+        titulo,
+        categoria,
+        round(precio, 2),
+        round(precio_base, 2),
+        round(precio_venta, 2),
+        round(ganancia, 2),
+        round(margen, 2),
+        round(descuento, 2),
+        round(rating, 2),
+        round(demanda_score, 2),
+        round(indice_compra, 2),
+        decision
+    ])
 
 # ordenar por índice
 candidatos.sort(key=lambda x: x[8], reverse=True)
