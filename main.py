@@ -139,7 +139,8 @@ live_sheet.update("A1", resumen + encabezados + candidatos)
 #------- HISTORICO -------
 historico_data = historico_sheet.get_all_values()
 
-if not historico_data:
+if not historico_data or historico_data[0][0] != "timestamp":
+    historico_sheet.clear()
     historico_sheet.append_row([
         "timestamp",
         "producto",
