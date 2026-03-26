@@ -1,7 +1,8 @@
-import requests
-import gspread
 import json
 import os
+import requests
+import gspread
+from datetime import datetime
 from google.oauth2.service_account import Credentials
 
 # -----------------------------
@@ -90,12 +91,24 @@ creds = Credentials.from_service_account_info(
 client = gspread.authorize(creds)
 
 # ⚠️ CAMBIA ESTE NOMBRE EXACTO
-sheet = client.open("Arbitraje IA Demo").sheet1
+spreadsheet = client.open("Arbitraje IA Demo")
+
+# hoja LIVE
+try:
+    live_sheet = spreadsheet.worksheet("LIVE")
+except:
+    live_sheet = spreadsheet.add_worksheet(title="LIVE", rows="100", cols="20")
+
+# hoja HISTORICO
+try:
+    historico_sheet = spreadsheet.worksheet("HISTORICO")
+except:
+    historico_sheet = spreadsheet.add_worksheet(title="HISTORICO", rows="1000", cols="20")
 
 # -----------------------------
 # 3. Subir datos
 # -----------------------------
-sheet.clear()
+live_sheet.clear()
 
 encabezados = [[
     "producto",
@@ -111,17 +124,39 @@ encabezados = [[
     "decision"
 ]]
 
-from datetime import datetime
-
 ahora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 resumen = [
     ["Última ejecución:", ahora],
+    ["Fuente:", "dummyjson"],
     ["Total candidatos:", len(candidatos)],
+    ["Filtro activo:", "descuento>10, rating>=4, precio<100, ganancia>5, margen>25"],
     [""]
 ]
 
-sheet.update("A1", resumen + encabezados + candidatos)
+live_sheet.update("A1", resumen + encabezados + candidatos)
+
+#------- HISTORICO -------
+historico_data = historico_sheet.get_all_values()
+
+if not historico_data:
+    historico_sheet.append_row([
+        "timestamp",
+        "producto",
+        "precio_compra",
+        "precio_base",
+        "precio_venta",
+        "ganancia",
+        "margen",
+        "descuento",
+        "rating",
+        "demanda_score",
+        "indice_compra",
+        "decision"
+    ])
+
+for fila in candidatos:
+    historico_sheet.append_row([ahora] + fila)
 
 print("Datos enviados a Google Sheets")
 print("Total:", len(candidatos)) 
