@@ -69,7 +69,7 @@ for p in productos:
     ])
 
 # ordenar por índice
-candidatos.sort(key=lambda x: x[8], reverse=True)
+candidatos.sort(key=lambda x: x[10], reverse=True)
 
 # -----------------------------
 # 2. Conectar a Google Sheets
