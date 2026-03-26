@@ -32,7 +32,7 @@ def filtrar_productos(productos):
             "tablets"
         ]
 
-        if categoria not in categorias_validas:
+        if categoria not in ["beauty", "fragrances"]:
             continue
 
         precio_venta = precio * 1.4
