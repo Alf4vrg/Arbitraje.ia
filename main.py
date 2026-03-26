@@ -24,8 +24,7 @@ def filtrar_productos(productos):
         rating = p["rating"]
 
         # Filtrar por categoría
-        if categoria not in ["smartphones", "laptops"]:
-            continue
+        pass
 
         precio_venta = precio * 1.4
         ganancia = precio_venta - precio
@@ -72,7 +71,7 @@ def evaluar_decision(margen, rating, precio, descuento):
     elif (
         margen >= 12 and
         rating >= 3.5 and
-        precio <= 3000
+        precio <= 300
     ):
         return "⚠️ MEDIA"
     else:
