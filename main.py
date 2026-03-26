@@ -137,32 +137,41 @@ resumen = [
 live_sheet.update("A1", resumen + encabezados + candidatos)
 
 #------- HISTORICO -------
+
+encabezado_historico = [[
+    "timestamp",
+    "producto",
+    "categoria",
+    "precio_compra",
+    "precio_base",
+    "precio_venta",
+    "ganancia",
+    "margen",
+    "descuento",
+    "rating",
+    "demanda_score",
+    "indice_compra",
+    "decision"
+]]
+
 historico_data = historico_sheet.get_all_values()
 
-if not historico_data or historico_data[0][0] != "timestamp":
+# validar encabezado
+if not historico_data or historico_data[0] != encabezado_historico[0]:
     historico_sheet.clear()
-    historico_sheet.append_row([
-        "timestamp",
-        "producto",
-        "precio_compra",
-        "precio_base",
-        "precio_venta",
-        "ganancia",
-        "margen",
-        "descuento",
-        "rating",
-        "demanda_score",
-        "indice_compra",
-        "decision"
-    ])
+    historico_sheet.update("A1", encabezado_historico)
+    historico_data = historico_sheet.get_all_values()
 
+# insertar nuevos datos debajo del encabezado
 filas_historico = [[ahora] + fila for fila in candidatos]
+
+if filas_historico:
+    historico_sheet.insert_rows(filas_historico, row=2)
 
 # limpiar registros con más de 30 días
 historico_data = historico_sheet.get_all_values()
 
-if historico_data:
-    encabezado_historico = historico_data[0]
+if len(historico_data) > 1:
     filas_validas = []
     limite = datetime.now() - timedelta(days=30)
 
@@ -178,7 +187,7 @@ if historico_data:
             continue
 
     historico_sheet.clear()
-    historico_sheet.update("A1", [encabezado_historico] + filas_validas)
+    historico_sheet.update("A1", encabezado_historico + filas_validas)
 
 print("Datos enviados a Google Sheets")
 print("Total:", len(candidatos)) 
