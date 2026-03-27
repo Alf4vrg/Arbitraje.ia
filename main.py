@@ -8,20 +8,15 @@ from google.oauth2.service_account import Credentials
 # -----------------------------
 # 1. Obtener productos
 # -----------------------------
-def obtener_ml(query):
-    url = f"https://api.mercadolibre.com/sites/MLM/search?q={query}"
-
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
-
-    response = requests.get(url, headers=headers)
+def obtener_aliexpress():
+    url = "https://dummyjson.com/products/category/smartphones"
+    response = requests.get(url)
     data = response.json()
 
     print("STATUS:", response.status_code)
-    print("RESPUESTA ML:", data)
-    
-    return data.get("results", [])
+    print("RESPUESTA:", data.keys())
+
+    return data.get("products", [])
 
 def filtrar_productos(productos):
     candidatos = []
@@ -233,13 +228,13 @@ def limpiar_historico(historico_sheet, historico_data, encabezado_historico):
 
 
 if __name__ == "__main__":
-    productos_ml = obtener_ml("perfume")
+    productos_ali = obtener_aliexpress()
 
-    for p in productos_ml[:10]:
+    for p in productos_ali[:10]:
         titulo = p["title"]
         precio = p["price"]
-        link = p["permalink"]
+        imagen = p["thumbnail"]
 
         print(f"{titulo} | ${precio}")
-        print(link)
+        print(imagen)
         print("------")
