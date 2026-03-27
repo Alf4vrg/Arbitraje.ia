@@ -8,11 +8,11 @@ from google.oauth2.service_account import Credentials
 # -----------------------------
 # 1. Obtener productos
 # -----------------------------
-def obtener_productos():
-    url = "https://dummyjson.com/products"
+def obtener_ml(query):
+    url = f"https://api.mercadolibre.com/sites/MLM/search?q={query}"
     response = requests.get(url)
     data = response.json()
-    return data["products"]
+    return data["results"]
 
 def filtrar_productos(productos):
     candidatos = []
@@ -221,3 +221,16 @@ if __name__ == "__main__":
 
     print("Datos enviados a Google Sheets")
     print("Total:", len(candidatos))
+
+
+    if __name__ == "__main__":
+    productos_ml = obtener_ml("perfume")
+
+    for p in productos_ml[:10]:
+        titulo = p["title"]
+        precio = p["price"]
+        link = p["permalink"]
+
+        print(f"{titulo} | ${precio}")
+        print(link)
+        print("------")
