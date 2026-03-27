@@ -10,12 +10,17 @@ from google.oauth2.service_account import Credentials
 # -----------------------------
 def obtener_ml(query):
     url = f"https://api.mercadolibre.com/sites/MLM/search?q={query}"
-    response = requests.get(url)
+
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    response = requests.get(url, headers=headers)
     data = response.json()
 
     print("STATUS:", response.status_code)
     print("RESPUESTA ML:", data)
-
+    
     return data.get("results", [])
 
 def filtrar_productos(productos):
