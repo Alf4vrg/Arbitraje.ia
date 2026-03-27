@@ -12,7 +12,11 @@ def obtener_ml(query):
     url = f"https://api.mercadolibre.com/sites/MLM/search?q={query}"
     response = requests.get(url)
     data = response.json()
-    return data["results"]
+
+    print("STATUS:", response.status_code)
+    print("RESPUESTA ML:", data)
+
+    return data.get("results", [])
 
 def filtrar_productos(productos):
     candidatos = []
