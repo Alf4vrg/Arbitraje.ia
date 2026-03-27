@@ -223,7 +223,7 @@ if __name__ == "__main__":
     print("Total:", len(candidatos))
 
 
-    if __name__ == "__main__":
+if __name__ == "__main__":
     productos_ml = obtener_ml("perfume")
 
     for p in productos_ml[:10]:
