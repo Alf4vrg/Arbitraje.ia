@@ -47,14 +47,10 @@ def filtrar_productos(productos):
         precio_venta = precio_compra * 1.8
         ganancia = precio_venta - precio_compra
         margen = (ganancia / precio_compra) * 100
+        demanda_score = rating * 20
 
         if margen < 30:
             continue
-
-        print(f"{titulo}")
-        print(f"Compra: ${round(precio_compra, 2)} MXN")
-        print(f"Venta: ${round(precio_venta, 2)} MXN")
-        print(f"Ganancia: ${round(ganancia, 2)} MXN ({round(margen, 2)}%)")
 
         indice_compra = (
             margen * 0.4 +
@@ -63,7 +59,7 @@ def filtrar_productos(productos):
         )
 
         # Evaluar decisión
-        decision = evaluar_decision(margen, rating, precio, descuento)
+        decision = evaluar_decision(margen, rating, precio_compra, descuento)
 
         if decision == "❌ DESCARTAR":
             continue
