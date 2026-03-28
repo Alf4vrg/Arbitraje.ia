@@ -175,7 +175,6 @@ def obtener_hojas(spreadsheet):
 # 3. Subir datos
 # -----------------------------
 def subir_datos(live_sheet, historico_sheet, candidatos):
-    recalcular_ganancia_real_en_sheet(live_sheet)
     #live_sheet.clear()
     ahora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -203,7 +202,7 @@ def subir_datos(live_sheet, historico_sheet, candidatos):
     ]
 
     live_sheet.update("A1", resumen + encabezados + candidatos)
-
+    recalcular_ganancia_real_en_sheet(live_sheet)
     # Manejo de histórico
     manejar_historico(historico_sheet, candidatos, ahora)
 
