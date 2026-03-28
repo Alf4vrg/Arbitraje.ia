@@ -87,7 +87,10 @@ def filtrar_productos(productos):
             round(rating, 2),
             round(demanda_score, 2),
             round(indice_compra, 2),
-            decision
+            decision,
+            "",
+            "",
+            ""
         ])
     return candidatos
 
@@ -160,7 +163,10 @@ def subir_datos(live_sheet, historico_sheet, candidatos):
         "rating",
         "demanda_score",
         "indice_compra",
-        "decision"
+        "decision",
+        "precio_venta_real",
+        "ganancia_real",
+        "fuente_venta"
     ]]
 
     resumen = [
