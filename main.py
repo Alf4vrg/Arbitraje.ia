@@ -241,19 +241,19 @@ def limpiar_historico(historico_sheet, historico_data, encabezado_historico):
 # -----------------------------
 # Ejecución del script
 # -----------------------------
-#if __name__ == "__main__":
- #   productos = obtener_productos()
-  #  candidatos = filtrar_productos(productos)
-   # candidatos.sort(key=lambda x: x[10], reverse=True)
+if __name__ == "__main__":
+    productos = obtener_productos()
+    candidatos = filtrar_productos(productos)
+    candidatos.sort(key=lambda x: x[10], reverse=True)
 
-#    client = conectar_google_sheets()
- #   spreadsheet = client.open("Arbitraje IA Demo")
-  #  live_sheet, historico_sheet = obtener_hojas(spreadsheet)
+    client = conectar_google_sheets()
+    spreadsheet = client.open("Arbitraje IA Demo")
+    live_sheet, historico_sheet = obtener_hojas(spreadsheet)
 
-   # subir_datos(live_sheet, historico_sheet, candidatos)
+    subir_datos(live_sheet, historico_sheet, candidatos)
 
-    #print("Datos enviados a Google Sheets")
-    #print("Total:", len(candidatos))
+    print("Datos enviados a Google Sheets")
+    print("Total:", len(candidatos))
 
 
 #if __name__ == "__main__":
@@ -269,8 +269,7 @@ def limpiar_historico(historico_sheet, historico_data, encabezado_historico):
 #       print(imagen)
 #        print("------") 
 
-if __name__ == "__main__":
-    productos = obtener_aliexpress()
-    candidatos = filtrar_productos(productos)
-
-    print("TOTAL CANDIDATOS:", len(candidatos))
+#if __name__ == "__main__":
+#   productos = obtener_aliexpress()
+#   candidatos = filtrar_productos(productos)
+#    print("TOTAL CANDIDATOS:", len(candidatos))
