@@ -68,7 +68,18 @@ def filtrar_productos(productos):
         if decision == "❌ DESCARTAR":
             continue
 
-        candidatos.append([
+        if decision == "🔥 OPORTUNIDAD":
+            print(f"{titulo}")
+            print(f"Compra: ${round(precio_compra, 2)} MXN")
+            print(f"Venta: ${round(precio_venta, 2)} MXN")
+            print(f"Ganancia: ${round(ganancia, 2)} MXN ({round(margen, 2)}%)")
+            print(f"Rating: {round(rating, 2)}")
+            print(f"Descuento: {round(descuento, 2)}%")
+            print("🔥 OPORTUNIDAD")
+            print("------")
+
+
+            candidatos.append([
             titulo,
             categoria,
             round(precio_compra, 2),
@@ -86,21 +97,21 @@ def filtrar_productos(productos):
 
 def evaluar_decision(margen, rating, precio, descuento):
     if (
-        margen >= 20 and
-        rating >= 4.0 and
-        precio <= 250 and
-        descuento >= 5
+        margen >= 35 and
+        rating >= 4.4 and
+        precio <= 12000 and
+        descuento >= 8
     ):
         return "🔥 OPORTUNIDAD"
     elif (
-        margen >= 12 and
-        rating >= 3.5 and
-        precio <= 300
+        margen >= 20 and
+        rating >= 4.0 and
+        precio <= 18000
     ):
         return "⚠️ MEDIA"
     else:
         return "❌ DESCARTAR"
-
+    
 # -----------------------------
 # 2. Conectar a Google Sheets
 # -----------------------------
