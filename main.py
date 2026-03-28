@@ -113,6 +113,31 @@ def calcular_ganancia_real(precio_compra, precio_venta_real):
     if not precio_venta_real or precio_venta_real <= 0:
         return 0
     return round(precio_venta_real - precio_compra, 2)
+
+def recalcular_ganancia_real_en_sheet(live_sheet):
+    datos = live_sheet.get_all_values()
+
+    if len(datos) < 7:
+        return
+
+    encabezados = datos[5]  # porque tus encabezados reales están en la fila 6
+
+    idx_precio_compra = encabezados.index("precio_compra")
+    idx_precio_venta_real = encabezados.index("precio_venta_real")
+    idx_ganancia_real = encabezados.index("ganancia_real")
+
+    for i in range(6, len(datos)):  # empieza a leer datos desde la fila 7
+        fila = datos[i]
+
+        try:
+            precio_compra = float(fila[idx_precio_compra]) if fila[idx_precio_compra] else 0
+            precio_venta_real = float(fila[idx_precio_venta_real]) if fila[idx_precio_venta_real] else 0
+
+            ganancia_real = calcular_ganancia_real(precio_compra, precio_venta_real)
+
+            live_sheet.update_cell(i + 1, idx_ganancia_real + 1, ganancia_real)
+        except:
+            continue
 # -----------------------------
 # 2. Conectar a Google Sheets
 # -----------------------------
@@ -150,6 +175,7 @@ def obtener_hojas(spreadsheet):
 # 3. Subir datos
 # -----------------------------
 def subir_datos(live_sheet, historico_sheet, candidatos):
+    recalcular_ganancia_real_en_sheet(live_sheet)
     #live_sheet.clear()
     ahora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
