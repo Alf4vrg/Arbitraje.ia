@@ -153,7 +153,8 @@ def obtener_hojas(spreadsheet):
 # 3. Subir datos
 # -----------------------------
 def subir_datos(live_sheet, historico_sheet, candidatos):
-    live_sheet.clear()
+    #live_sheet.clear()
+    live_sheet.update("A1", encabezados + candidatos)
     ahora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     encabezados = [[
