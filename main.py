@@ -69,7 +69,7 @@ def filtrar_productos(productos):
         candidatos.append([
             titulo,
             categoria,
-            round(precio, 2),
+            round(precio_compra, 2),
             round(precio_base, 2),
             round(precio_venta, 2),
             round(ganancia, 2),
@@ -236,14 +236,21 @@ def limpiar_historico(historico_sheet, historico_data, encabezado_historico):
     #print("Total:", len(candidatos))
 
 
+#if __name__ == "__main__":
+#   productos_ali = obtener_aliexpress()
+#
+#    for p in productos_ali[:10]:
+#       titulo = p["title"]
+#       precio = p["price"]
+#        imagen = p["thumbnail"]
+#
+#       print(f"{titulo} | ${precio}")
+# 
+#       print(imagen)
+#        print("------") 
+
 if __name__ == "__main__":
-    productos_ali = obtener_aliexpress()
+    productos = obtener_aliexpress()
+    candidatos = filtrar_productos(productos)
 
-    for p in productos_ali[:10]:
-        titulo = p["title"]
-        precio = p["price"]
-        imagen = p["thumbnail"]
-
-        print(f"{titulo} | ${precio}")
-        print(imagen)
-        print("------")
+    print("TOTAL CANDIDATOS:", len(candidatos))
