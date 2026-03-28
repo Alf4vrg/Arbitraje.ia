@@ -27,6 +27,7 @@ def filtrar_productos(productos):
         categoria = p["category"].lower()
         descuento = p["discountPercentage"]
         rating = p["rating"]
+        demanda_score = rating * 20
 
         # Filtrar por categoría
         categorias_validas = [
