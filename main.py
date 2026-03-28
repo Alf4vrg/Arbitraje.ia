@@ -88,9 +88,10 @@ def filtrar_productos(productos):
             round(demanda_score, 2),
             round(indice_compra, 2),
             decision,
-            "",
-            "",
-            ""
+            0,
+            0,
+            "manual"
+            
         ])
     return candidatos
 
@@ -111,6 +112,10 @@ def evaluar_decision(margen, rating, precio, descuento):
     else:
         return "❌ DESCARTAR"
     
+def calcular_ganancia_real(precio_compra, precio_venta_real):
+    if not precio_venta_real or precio_venta_real <= 0:
+        return 0
+    return round(precio_venta_real - precio_compra, 2)
 # -----------------------------
 # 2. Conectar a Google Sheets
 # -----------------------------
