@@ -39,8 +39,10 @@ def filtrar_productos(productos):
         if categoria not in categorias_validas:
             continue
 
-        precio_compra = precio
-        precio_venta = precio_compra * 1.8  # simulación de venta
+        tipo_cambio = 17  # MXN por USD
+
+        precio_compra = precio * tipo_cambio
+        precio_venta = precio_compra * 1.8
         ganancia = precio_venta - precio_compra
         margen = (ganancia / precio_compra) * 100
 
@@ -48,10 +50,9 @@ def filtrar_productos(productos):
             continue
 
         print(f"{titulo}")
-        print(f"Compra: ${precio_compra}")
-        print(f"Venta: ${round(precio_venta, 2)}")
-        print(f"Ganancia: ${round(ganancia, 2)} ({round(margen, 2)}%)")
-        print("------")
+        print(f"Compra: ${round(precio_compra, 2)} MXN")
+        print(f"Venta: ${round(precio_venta, 2)} MXN")
+        print(f"Ganancia: ${round(ganancia, 2)} MXN ({round(margen, 2)}%)")
 
         indice_compra = (
             margen * 0.4 +
