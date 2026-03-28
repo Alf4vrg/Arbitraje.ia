@@ -242,7 +242,7 @@ def limpiar_historico(historico_sheet, historico_data, encabezado_historico):
 # Ejecución del script
 # -----------------------------
 if __name__ == "__main__":
-    productos = obtener_productos()
+    productos = obtener_aliexpress()
     candidatos = filtrar_productos(productos)
     candidatos.sort(key=lambda x: x[10], reverse=True)
 
