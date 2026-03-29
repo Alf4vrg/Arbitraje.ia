@@ -3,10 +3,9 @@ from core.models import Product
 
 def obtener_links_manual():
     return [
-        "https://www.aliexpress.com/item/1005001234567890.html",
-        "https://www.aliexpress.com/item/1005009876543210.html",
+        "https://www.aliexpress.com/wholesale?SearchText=Samsung+Galaxy+A51",
+        "https://www.aliexpress.com/wholesale?SearchText=iPhone+11+128GB",
     ]
-
 
 def construir_productos_desde_links(links):
     products = []
