@@ -1,22 +1,22 @@
 from core.models import Product
-from config.settings import KEYWORDS
+from config.settings import ALIEXPRESS_KEYWORDS
 
 
 def obtener_productos_aliexpress():
     products = []
 
-    for keyword in KEYWORDS:
-        query = keyword.replace(" ", "+")
+    for item in ALIEXPRESS_KEYWORDS:
+        query = item["title"].replace(" ", "+")
 
         products.append(
             Product(
                 source="aliexpress",
-                title=keyword,
-                category="smartphones",
-                price=150.0,
+                title=item["title"],
+                category=item["category"],
+                price=item["price"],
                 currency="USD",
-                rating=4.5,
-                discount_percent=10.0,
+                rating=item["rating"],
+                discount_percent=item["discount_percent"],
                 image_url="https://via.placeholder.com/150",
                 product_url=f"https://www.aliexpress.com/wholesale?SearchText={query}",
             )

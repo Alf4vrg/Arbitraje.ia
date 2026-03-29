@@ -20,11 +20,11 @@ ACTIVE_CATEGORIES = [
     "smartphones",
 ]
 
-KEYWORDS = [
-    "smartphone",
-    "iphone",
-    "android",
-    "gaming phone",
-    "refurbished phone",
-    "cheap smartphone",
+ALIEXPRESS_KEYWORDS = [
+    {"title": "smartphone", "category": "smartphones", "price": 150.0, "rating": 4.5, "discount_percent": 10.0},
+    {"title": "iphone", "category": "smartphones", "price": 220.0, "rating": 4.6, "discount_percent": 8.0},
+    {"title": "android", "category": "smartphones", "price": 140.0, "rating": 4.4, "discount_percent": 12.0},
+    {"title": "gaming phone", "category": "smartphones", "price": 260.0, "rating": 4.7, "discount_percent": 9.0},
+    {"title": "refurbished phone", "category": "smartphones", "price": 110.0, "rating": 4.3, "discount_percent": 18.0},
+    {"title": "cheap smartphone", "category": "smartphones", "price": 95.0, "rating": 4.2, "discount_percent": 22.0},
 ]
