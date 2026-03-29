@@ -20,7 +20,13 @@ def run_pipeline():
         if not is_valid_category(product.category):
             continue
 
-        price_buy_mxn = round(product.price * USD_TO_MXN, 2)
+        if product.currency == "USD":
+            price_buy_mxn = round(product.price * USD_TO_MXN, 2)
+        elif product.currency == "MXN":
+            price_buy_mxn = round(product.price, 2)
+        else:
+            continue
+
         discount_fraction = product.discount_percent / 100 if product.discount_percent > 0 else 0
 
         product.price = price_buy_mxn
