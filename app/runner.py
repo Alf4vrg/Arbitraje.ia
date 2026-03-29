@@ -36,9 +36,14 @@ def run_pipeline():
             product.price / (1 - discount_fraction), 2
         ) if 0 < discount_fraction < 1 else product.price
 
+        if product.rating >= 4.7:
+            multiplier = 2.5
+        else:
+            multiplier = 1.8
+
         product.estimated_sale_price = round(
-            calculate_estimated_sale_price(product.price, ESTIMATED_SALE_MULTIPLIER), 2
-        )
+            calculate_estimated_sale_price(product.price, multiplier), 2
+        )   
 
         product.estimated_profit = round(
             calculate_profit(product.price, product.estimated_sale_price), 2
