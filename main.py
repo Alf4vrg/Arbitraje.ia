@@ -138,6 +138,18 @@ def decidir_compra_final(margen_real, demanda_score):
         return "⚠️ REVISAR"
     else:
         return "❌ DESCARTAR"
+
+def asignar_capital(decision_final, margen_real, demanda_score, capital_total, total_comprar, total_revisar):
+    capital_invertible = capital_total * 0.75
+
+    if decision_final == "🔥 COMPRAR" and total_comprar > 0:
+        return round((capital_invertible * 0.35) / total_comprar, 2)
+
+    elif decision_final == "⚠️ REVISAR" and total_revisar > 0:
+        return round((capital_invertible * 0.40) / total_revisar, 2)
+
+    else:
+        return 0
     
 def limpiar_numero(valor):
     if valor is None:
@@ -176,7 +188,11 @@ def recalcular_ganancia_real_en_sheet(live_sheet):
     idx_margen_estimado = encabezados.index("margen")
     idx_demanda_score = encabezados.index("demanda_score")
     idx_decision_final = encabezados.index("decision_final")
-  
+    idx_capital_sugerido = encabezados.index("capital_sugerido")
+    total_comprar = sum(1 for fila in datos if "🔥 COMPRAR" in fila)
+    total_revisar = sum(1 for fila in datos if "⚠️ REVISAR" in fila)
+    capital_total = 9000
+
     for i in range(6, len(datos)):  # desde fila 7
         fila = datos[i]
 
@@ -189,12 +205,20 @@ def recalcular_ganancia_real_en_sheet(live_sheet):
             estado_validacion = clasificar_validacion(margen_estimado, margen_real, precio_venta_real)
             demanda_score = limpiar_numero(fila[idx_demanda_score]) if idx_demanda_score < len(fila) else 0
             decision_final = decidir_compra_final(margen_real, demanda_score)
-
+            capital_sugerido = asignar_capital(
+                decision_final,
+                margen_real,
+                demanda_score,
+                capital_total,
+                total_comprar,
+                total_revisar
+        )
+        
             live_sheet.update_cell(i + 1, idx_ganancia_real + 1, ganancia_real)
             live_sheet.update_cell(i + 1, idx_margen_real + 1, margen_real)
             live_sheet.update_cell(i + 1, idx_estado_validacion + 1, estado_validacion)
             live_sheet.update_cell(i + 1, idx_decision_final + 1, decision_final)
-            live_sheet.update_cell(i + 1, idx_decision_final + 1, decision_final)
+            live_sheet.update_cell(i + 1, idx_capital_sugerido + 1, capital_sugerido)
         except Exception as e:
             print(f"Error en fila {i+1}: {e}")
             continue
