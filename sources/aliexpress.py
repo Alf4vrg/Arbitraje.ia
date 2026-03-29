@@ -2,10 +2,13 @@ from core.models import Product
 from config.settings import ALIEXPRESS_KEYWORDS
 
 
-def obtener_productos_aliexpress():
+def obtener_productos_aliexpress(category_filter=None):
     products = []
 
     for item in ALIEXPRESS_KEYWORDS:
+        if category_filter and item["category"] != category_filter:
+            continue
+
         query = item["title"].replace(" ", "+")
 
         products.append(
