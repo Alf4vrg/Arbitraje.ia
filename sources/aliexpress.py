@@ -12,7 +12,8 @@ def obtener_productos_aliexpress():
             rating=4.7,
             discount_percent=18.0,
             image_url="https://example.com/image1.jpg",
-            product_url="https://example.com/producto1"
+            
+        product_url=f"https://www.aliexpress.com/wholesale?SearchText={'Auriculares+Bluetooth+TWS'}"
         ),
         Product(
             source="aliexpress",
@@ -23,6 +24,7 @@ def obtener_productos_aliexpress():
             rating=4.5,
             discount_percent=12.0,
             image_url="https://example.com/image2.jpg",
-            product_url="https://example.com/producto2"
+            
+        product_url=f"https://www.aliexpress.com/wholesale?SearchText={'Smartphone+Android+8GB+256GB'}"
         ),
     ]
