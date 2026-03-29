@@ -88,3 +88,5 @@ def run_pipeline():
         print("🔗 Link:", product.product_url)
         print("🖼 Imagen:", product.image_url)
         print("-" * 30)
+
+    return candidates
