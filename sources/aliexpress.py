@@ -5,7 +5,12 @@ from config.settings import ALIEXPRESS_CATEGORY_SEEDS
 def obtener_productos_aliexpress():
     products = []
 
+
+    from config.settings import ALIEXPRESS_CATEGORY_SEEDS, ACTIVE_CATEGORIES
+
     for category, items in ALIEXPRESS_CATEGORY_SEEDS.items():
+        if category not in ACTIVE_CATEGORIES:
+            continue
         for item in items:
             query = item["title"].replace(" ", "+")
             products.append(

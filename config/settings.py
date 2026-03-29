@@ -15,3 +15,7 @@ ALIEXPRESS_CATEGORY_SEEDS = {
         {"title": "Cargador USB-C 65W", "price": 14.0, "rating": 4.5, "discount_percent": 20.0},
     ],
 }
+
+ACTIVE_CATEGORIES = [
+    "smartphones",
+]
