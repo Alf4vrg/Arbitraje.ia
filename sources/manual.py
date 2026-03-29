@@ -5,14 +5,14 @@ def obtener_productos_manual():
     return [
     Product(
         source="manual",
-        title="smartwach deportivos",
+        title="Audifonos KZ EDX PRO IEMcableados",
         category="mobile-accessories",
-        price=119.81,
+        price=86.59,
         currency="MXN",
-        rating=4.2,
+        rating=4.9,
         discount_percent=0.0,
         image_url="https://ae01.alicdn.com/kf/placeholder2.jpg",
-        product_url="https://es.aliexpress.com/item/1005009727258458.html?spm=a2g0o.productlist.main.2.3afc6ePm6ePmlW&algo_pvid=cf1733c9-763d-4c0a-9104-6c2249127b64&algo_exp_id=cf1733c9-763d-4c0a-9104-6c2249127b64-1&pdp_ext_f=%7B%22order%22%3A%22-1%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21MXN%21174.58%21119.81%21%21%2166.02%2145.31%21%4021030a4b17748128699602764e117f%2112000049963449234%21sea%21MX%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3Abc4d4f2f%3Bm03_new_user%3A-29895%3BpisId%3A5000000197832000&curPageLogUid=WKa7Lm97rcmD&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005009727258458%7C_p_origin_prod%3A",
+        product_url="https://www.aliexpress.com/ssr/300000512/BundleDeals2?spm=a2g0o.home.3fornn.1.39a670e5t1vqnI&disableNav=YES&pha_manifest=ssr&_immersiveMode=true&_gl=1*lth2ep*_gcl_au*MTIyOTYxNjEyMS4xNzc0ODA5MjM2*_ga*MTM4OTg0NzYwMC4xNzYzNTgyOTA0*_ga_VED1YSGNC7*czE3NzQ4MjIzMTEkbzUkZzEkdDE3NzQ4MjI3NDMkajU0JGwwJGgw",
     ),
     Product(
         source="manual",
