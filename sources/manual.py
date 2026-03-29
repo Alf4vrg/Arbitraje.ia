@@ -17,7 +17,7 @@ def obtener_productos_manual():
     Product(
         source="manual",
         title="audifonos bluetooth gaming",
-        category="gaming-accessories",
+        category="mobile-accessories",
         price=273.26,
         currency="MXN",
         rating=4.9,
