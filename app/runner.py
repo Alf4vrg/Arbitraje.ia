@@ -8,13 +8,11 @@ from core.scoring import (
     calculate_profit,
     initial_decision,
 )
-from sources.dummyjson_source import DummyJsonSource
-
+from sources.manual import obtener_productos_manual
 
 def run_pipeline():
-    from sources.aliexpress import obtener_productos_aliexpress
 
-    products = obtener_productos_aliexpress(category_filter="smartphones")
+    products = obtener_productos_manual()
 
     candidates = []
 
