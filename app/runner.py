@@ -8,17 +8,11 @@ from core.scoring import (
     calculate_profit,
     initial_decision,
 )
-
-# 👇 IMPORTAMOS NUEVO SISTEMA DE LINKS
-from sources.manual import obtener_links_manual, construir_productos_desde_links
+from sources.manual import obtener_productos_manual
 
 
 def run_pipeline():
-    # 🔹 1. Obtener links manuales
-    links = obtener_links_manual()
-
-    # 🔹 2. Convertir links → productos
-    products = construir_productos_desde_links(links)
+    products = obtener_productos_manual()
 
     candidates = []
 
@@ -26,14 +20,12 @@ def run_pipeline():
         if not is_valid_category(product.category):
             continue
 
-        # 💱 Conversión a MXN
         price_buy_mxn = round(product.price * USD_TO_MXN, 2)
         discount_fraction = product.discount_percent / 100 if product.discount_percent > 0 else 0
 
         product.price = price_buy_mxn
         product.currency = "MXN"
 
-        # 📊 Cálculos
         product.base_price = round(
             product.price / (1 - discount_fraction), 2
         ) if 0 < discount_fraction < 1 else product.price
@@ -65,16 +57,13 @@ def run_pipeline():
             product.discount_percent,
         )
 
-        # 🔥 filtro final
         if not passes_minimum_margin(product.estimated_margin):
             continue
 
         candidates.append(product)
 
-    # 📊 ordenar por mejor oportunidad
     candidates.sort(key=lambda x: x.buy_index, reverse=True)
 
-    # 🖨️ salida
     print(f"Candidatos: {len(candidates)}")
 
     for product in candidates:
