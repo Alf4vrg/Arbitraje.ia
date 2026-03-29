@@ -114,31 +114,53 @@ def calcular_ganancia_real(precio_compra, precio_venta_real):
         return 0
     return round(precio_venta_real - precio_compra, 2)
 
+def limpiar_numero(valor):
+    if valor is None:
+        return 0.0
+
+    texto = str(valor).strip()
+
+    if not texto:
+        return 0.0
+
+    texto = texto.replace("$", "").replace("MXN", "").replace(" ", "")
+
+    # Si viene con coma decimal tipo 5949,83
+    if "," in texto and "." not in texto:
+        texto = texto.replace(",", ".")
+
+    # Si viene con comas de miles tipo 10,699.50
+    elif "," in texto and "." in texto:
+        texto = texto.replace(",", "")
+
+    return float(texto)
+
 def recalcular_ganancia_real_en_sheet(live_sheet):
     datos = live_sheet.get_all_values()
 
     if len(datos) < 7:
         return
 
-    encabezados = datos[5]  # porque tus encabezados reales están en la fila 6
+    encabezados = datos[5]  # fila 6
 
     idx_precio_compra = encabezados.index("precio_compra")
     idx_precio_venta_real = encabezados.index("precio_venta_real")
     idx_ganancia_real = encabezados.index("ganancia_real")
 
-    for i in range(6, len(datos)):  # empieza a leer datos desde la fila 7
+    for i in range(6, len(datos)):  # desde fila 7
         fila = datos[i]
 
         try:
-            precio_compra = float(fila[idx_precio_compra]) if fila[idx_precio_compra] else 0
-            precio_venta_real = float(fila[idx_precio_venta_real]) if fila[idx_precio_venta_real] else 0
+            precio_compra = limpiar_numero(fila[idx_precio_compra]) if idx_precio_compra < len(fila) else 0
+            precio_venta_real = limpiar_numero(fila[idx_precio_venta_real]) if idx_precio_venta_real < len(fila) else 0
 
             ganancia_real = calcular_ganancia_real(precio_compra, precio_venta_real)
 
             live_sheet.update_cell(i + 1, idx_ganancia_real + 1, ganancia_real)
-        except:
+        except Exception as e:
+            print(f"Error en fila {i+1}: {e}")
             continue
-# -----------------------------
+                                                                                                                                        # -----------------------------# -----------------------------# -----------------------------
 # 2. Conectar a Google Sheets
 # -----------------------------
 def conectar_google_sheets():
@@ -202,6 +224,7 @@ def subir_datos(live_sheet, historico_sheet, candidatos):
     ]
 
     live_sheet.update("A1", resumen + encabezados + candidatos)
+
     recalcular_ganancia_real_en_sheet(live_sheet)
     # Manejo de histórico
     manejar_historico(historico_sheet, candidatos, ahora)
