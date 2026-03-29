@@ -119,6 +119,18 @@ def calcular_margen_real(precio_compra, precio_venta_real):
         return 0
     return round((precio_venta_real - precio_compra) / precio_compra * 100, 2)
 
+def clasificar_validacion(margen_estimado, margen_real, precio_venta_real):
+    if not precio_venta_real or precio_venta_real <= 0 or margen_real <= 0:
+        return "❓ SIN VALIDAR"
+
+    if margen_real >= 20:
+        return "✅ REAL"
+
+    if margen_real < 20 and margen_estimado >= 40:
+        return "⚠️ INFLADO"
+
+    return "⚠️ INFLADO"
+
 def limpiar_numero(valor):
     if valor is None:
         return 0.0
@@ -152,7 +164,9 @@ def recalcular_ganancia_real_en_sheet(live_sheet):
     idx_precio_venta_real = encabezados.index("precio_venta_real")
     idx_ganancia_real = encabezados.index("ganancia_real")
     idx_margen_real = encabezados.index("margen_real")
-
+    idx_estado_validacion = encabezados.index("estado_validacion")
+    idx_margen_estimado = encabezados.index("margen")
+  
     for i in range(6, len(datos)):  # desde fila 7
         fila = datos[i]
 
@@ -161,9 +175,13 @@ def recalcular_ganancia_real_en_sheet(live_sheet):
             precio_venta_real = limpiar_numero(fila[idx_precio_venta_real]) if idx_precio_venta_real < len(fila) else 0
             ganancia_real = calcular_ganancia_real(precio_compra, precio_venta_real)
             margen_real = calcular_margen_real(precio_compra, precio_venta_real)
+            margen_estimado = limpiar_numero(fila[idx_margen_estimado]) if idx_margen_estimado < len(fila) else 0
+            estado_validacion = clasificar_validacion(margen_estimado, margen_real, precio_venta_real)
+
 
             live_sheet.update_cell(i + 1, idx_ganancia_real + 1, ganancia_real)
             live_sheet.update_cell(i + 1, idx_margen_real + 1, margen_real)
+            live_sheet.update_cell(i + 1, idx_estado_validacion + 1, estado_validacion)
         except Exception as e:
             print(f"Error en fila {i+1}: {e}")
             continue
