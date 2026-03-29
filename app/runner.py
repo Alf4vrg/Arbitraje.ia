@@ -12,8 +12,9 @@ from sources.dummyjson_source import DummyJsonSource
 
 
 def run_pipeline():
-    source = DummyJsonSource()
-    products = source.fetch_products()
+    from sources.aliexpress import obtener_productos_aliexpress
+
+    products = obtener_productos_aliexpress()
 
     candidates = []
 
