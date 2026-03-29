@@ -19,3 +19,12 @@ ALIEXPRESS_CATEGORY_SEEDS = {
 ACTIVE_CATEGORIES = [
     "smartphones",
 ]
+
+KEYWORDS = [
+    "smartphone",
+    "iphone",
+    "android",
+    "gaming phone",
+    "refurbished phone",
+    "cheap smartphone",
+]
