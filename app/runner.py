@@ -46,4 +46,20 @@ def run_pipeline():
         candidates.append(product)
 
     candidates.sort(key=lambda x: x.buy_index, reverse=True)
+
+    print(f"\nCandidatos: {len(candidates)}\n")
+
+    for product in candidates:
+        print(f"""
+    📦 {product.title}
+    💰 Compra: {round(product.price, 2)} MXN
+    💸 Venta estimada: {round(product.estimated_sale_price, 2)} MXN
+    📊 Margen: {round(product.estimated_margin, 2)}%
+    🔥 Demanda: {round(product.demand_score, 2)}
+    🧠 Índice: {round(product.buy_index, 2)}
+    🎯 Decisión: {product.initial_decision}
+    🔗 Link: {getattr(product, 'product_url', 'N/A')}
+    🖼 Imagen: {getattr(product, 'image_url', 'N/A')}
+    --------------------------
+    """)
     return candidates
