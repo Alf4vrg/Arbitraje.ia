@@ -41,6 +41,14 @@ def run_pipeline():
         else:
             multiplier = 1.8
 
+        market_data = estimate_market_price(product.title)
+
+        product.market_min_price = market_data["min_price"]
+        product.market_max_price = market_data["max_price"]
+        product.market_avg_price = market_data["avg_price"]
+        product.market_competition = market_data["competition"]
+
+
         raw_sale_price = calculate_estimated_sale_price(product.price, multiplier)
 
         # Ajuste con mercado real
@@ -54,13 +62,7 @@ def run_pipeline():
         product.estimated_profit = round(
             calculate_profit(product.price, product.estimated_sale_price), 2
         )
-        market_data = estimate_market_price(product.title)
-
-        product.market_min_price = market_data["min_price"]
-        product.market_max_price = market_data["max_price"]
-        product.market_avg_price = market_data["avg_price"]
-        product.market_competition = market_data["competition"]
-
+        
         product.estimated_margin = calculate_margin(
             product.price, product.estimated_sale_price
         )
