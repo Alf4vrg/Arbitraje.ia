@@ -6,7 +6,6 @@ from core.scoring import (
     calculate_estimated_sale_price,
     calculate_margin,
     calculate_profit,
-    initial_decision,
     final_decision,
 )
 from sources.catalog import get_products_by_keyword

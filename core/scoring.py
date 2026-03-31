@@ -37,7 +37,7 @@ def initial_decision(margin: float, rating: float, price_buy: float, discount: f
 
 def final_decision(estimated_margin: float, market_competition: int, market_avg_price: float) -> str:
     if market_avg_price == 0:
-        return "❌ DESCARTAR"
+        return "⚠️ SIN DATOS"
 
     if market_competition <= 4 and estimated_margin >= 80:
         return "🔥 OPORTUNIDAD"
