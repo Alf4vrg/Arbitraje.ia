@@ -48,6 +48,8 @@ def run_pipeline(keyword: str = "auto"):
         product.market_avg_price = market_data["avg_price"]
         product.market_competition = market_data["competition"]
         product.market_source = market_data["source"]
+        product.market_debug = market_data.get("debug", "")
+        product.market_url = market_data.get("url", "")
 
 
         raw_sale_price = calculate_estimated_sale_price(product.price, multiplier)
@@ -107,5 +109,7 @@ def run_pipeline(keyword: str = "auto"):
         print("📈 Promedio MX:", round(product.market_avg_price, 2))
         print("📊 Competencia:", product.market_competition)
         print("🧭 Fuente mercado:", product.market_source)
+        print("🛠 Debug mercado:", product.market_debug)
+        print("🔗 URL mercado:", product.market_url)
 
     return candidates

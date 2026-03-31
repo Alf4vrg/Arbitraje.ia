@@ -50,7 +50,6 @@ def estimate_market_price(product_title: str):
     # 1. intentar Mercado Libre real
     real_market = search_mercadolibre_prices(title)
     if real_market["avg_price"] > 0:
-        real_market["source"] = "mercadolibre_scraper"
         return real_market
 
     # 2. coincidencia exacta manual

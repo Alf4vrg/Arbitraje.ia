@@ -31,7 +31,7 @@ def clean_price(text: str) -> float | None:
 def search_mercadolibre_prices(query: str) -> dict:
     """
     Búsqueda básica en Mercado Libre México.
-    Devuelve min, max, avg y competition.
+    Devuelve min, max, avg, competition y debug.
     """
     url_query = query.strip().replace(" ", "-")
     url = f"https://listado.mercadolibre.com.mx/{url_query}"
@@ -39,19 +39,21 @@ def search_mercadolibre_prices(query: str) -> dict:
     try:
         response = requests.get(url, headers=HEADERS, timeout=15)
         response.raise_for_status()
-    except Exception:
+    except Exception as e:
         return {
             "min_price": 0,
             "max_price": 0,
             "avg_price": 0,
             "competition": 0,
+            "source": "mercadolibre_error",
+            "debug": str(e),
+            "url": url,
         }
 
     soup = BeautifulSoup(response.text, "html.parser")
 
     prices = []
 
-    # Mercado Libre cambia HTML seguido, así que buscamos varias clases posibles
     selectors = [
         "span.andes-money-amount__fraction",
         "span.poly-price__current span.andes-money-amount__fraction",
@@ -70,7 +72,6 @@ def search_mercadolibre_prices(query: str) -> dict:
         if price and price > 0:
             prices.append(price)
 
-    # deduplicar un poco
     prices = prices[:20]
 
     if not prices:
@@ -79,6 +80,9 @@ def search_mercadolibre_prices(query: str) -> dict:
             "max_price": 0,
             "avg_price": 0,
             "competition": 0,
+            "source": "mercadolibre_no_prices",
+            "debug": f"no prices found, html length={len(response.text)}",
+            "url": url,
         }
 
     return {
@@ -86,4 +90,7 @@ def search_mercadolibre_prices(query: str) -> dict:
         "max_price": max(prices),
         "avg_price": round(sum(prices) / len(prices), 2),
         "competition": len(prices),
+        "source": "mercadolibre_scraper",
+        "debug": f"found {len(prices)} prices",
+        "url": url,
     }
