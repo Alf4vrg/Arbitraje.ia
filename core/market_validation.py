@@ -1,24 +1,40 @@
-import random
+MARKET_REFERENCE = {
+    "Audifonos KZ EDX PRO IEMcableados": {
+        "min_price": 140,
+        "max_price": 180,
+        "avg_price": 155,
+        "competition": 9,
+    },
+    "audifonos bluetooth gaming": {
+        "min_price": 190,
+        "max_price": 300,
+        "avg_price": 240,
+        "competition": 8,
+    },
+    "Mini impresora térmica HPRT bluetooth MT53": {
+        "min_price": 120,
+        "max_price": 180,
+        "avg_price": 150,
+        "competition": 6,
+    },
+    "smartwach deportivos": {
+        "min_price": 190,
+        "max_price": 300,
+        "avg_price": 245,
+        "competition": 4,
+    },
+}
 
 
 def estimate_market_price(product_title: str):
-    """
-    Simula búsqueda en mercado mexicano (después lo conectamos real)
-    """
+    data = MARKET_REFERENCE.get(product_title)
 
-    # ⚠️ por ahora es simulado pero estructurado para lo real
-    base_prices = [
-        120, 150, 180, 220, 250, 300, 350
-    ]
-
-    sampled = random.sample(base_prices, k=3)
-
-    min_price = min(sampled)
-    max_price = max(sampled)
+    if data:
+        return data
 
     return {
-        "min_price": min_price,
-        "max_price": max_price,
-        "avg_price": sum(sampled) / len(sampled),
-        "competition": random.randint(3, 12)
+        "min_price": 0,
+        "max_price": 0,
+        "avg_price": 0,
+        "competition": 0,
     }
