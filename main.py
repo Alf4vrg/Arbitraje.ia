@@ -381,7 +381,7 @@
 from app.runner import run_pipeline
 
 if __name__ == "__main__":
-    keyword = "audifonos"
+    keyword = "sensor nissan"
     source_name = "aliexpress"
 
     candidates = run_pipeline(keyword, source_name)
