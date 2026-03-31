@@ -1,3 +1,5 @@
+from sources.mercadolibre import search_mercadolibre_prices
+
 MARKET_REFERENCE = {
     "kz edx pro": {
         "min_price": 140,
@@ -45,16 +47,21 @@ def normalize_text(text: str) -> str:
 def estimate_market_price(product_title: str):
     title = normalize_text(product_title)
 
-    # 1. coincidencia exacta
+    # 1. intentar Mercado Libre real
+    real_market = search_mercadolibre_prices(title)
+    if real_market["avg_price"] > 0:
+        return real_market
+
+    # 2. coincidencia exacta manual
     if title in MARKET_REFERENCE:
         return MARKET_REFERENCE[title]
 
-    # 2. coincidencia parcial
+    # 3. coincidencia parcial manual
     for key, data in MARKET_REFERENCE.items():
         if key in title or title in key:
             return data
 
-    # 3. sin datos
+    # 4. sin datos
     return {
         "min_price": 0,
         "max_price": 0,
