@@ -75,6 +75,17 @@ def run_pipeline():
             product.rating,
         )
 
+        # Ajuste final según mercado real
+        if product.market_competition >= 8 and product.estimated_margin < 80:
+            product.initial_decision = "⚠️ MEDIA"
+
+        if product.market_competition <= 4 and product.estimated_margin >= 80:
+            product.initial_decision = "🔥 OPORTUNIDAD"
+
+        if product.market_avg_price == 0:
+            product.initial_decision = "❌ DESCARTAR"
+
+            
         product.initial_decision = initial_decision(
             product.estimated_margin,
             product.rating,
