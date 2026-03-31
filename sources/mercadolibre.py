@@ -57,6 +57,9 @@ def search_mercadolibre_prices(query: str) -> dict:
     selectors = [
         "span.andes-money-amount__fraction",
         "span.poly-price__current span.andes-money-amount__fraction",
+        "div.poly-price__current span.andes-money-amount__fraction",
+        "div.ui-search-price__second-line span.andes-money-amount__fraction",
+        "span.price-tag-fraction",
     ]
 
     found_texts = []
@@ -65,7 +68,7 @@ def search_mercadolibre_prices(query: str) -> dict:
         for el in elements:
             txt = el.get_text(strip=True)
             if txt:
-                found_texts.append(txt)
+                found_texts = found_texts[:30]
 
     for txt in found_texts:
         price = clean_price(txt)
@@ -81,7 +84,7 @@ def search_mercadolibre_prices(query: str) -> dict:
             "avg_price": 0,
             "competition": 0,
             "source": "mercadolibre_no_prices",
-            "debug": f"no prices found, html length={len(response.text)}",
+            "debug": f"no prices found, html length={len(response.text)}, sample_texts={found_texts[:10]}",
             "url": url,
         }
 
