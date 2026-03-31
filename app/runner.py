@@ -7,6 +7,7 @@ from core.scoring import (
     calculate_margin,
     calculate_profit,
     initial_decision,
+    final_decision,
 )
 from sources.manual import obtener_productos_manual
 from core.market_validation import estimate_market_price
@@ -75,23 +76,12 @@ def run_pipeline():
             product.rating,
         )
 
-        # Ajuste final según mercado real
-        if product.market_competition >= 8 and product.estimated_margin < 80:
-            product.initial_decision = "⚠️ MEDIA"
-
-        if product.market_competition <= 4 and product.estimated_margin >= 80:
-            product.initial_decision = "🔥 OPORTUNIDAD"
-
-        if product.market_avg_price == 0:
-            product.initial_decision = "❌ DESCARTAR"
-
-            
-        product.initial_decision = initial_decision(
+        product.initial_decision = final_decision(
             product.estimated_margin,
-            product.rating,
-            product.price,
-            product.discount_percent,
+            product.market_competition,
+            product.market_avg_price,
         )
+
 
         if not passes_minimum_margin(product.estimated_margin):
             continue
