@@ -50,16 +50,21 @@ def estimate_market_price(product_title: str):
     # 1. intentar Mercado Libre real
     real_market = search_mercadolibre_prices(title)
     if real_market["avg_price"] > 0:
+        real_market["source"] = "mercadolibre_scraper"
         return real_market
 
     # 2. coincidencia exacta manual
     if title in MARKET_REFERENCE:
-        return MARKET_REFERENCE[title]
+        data = MARKET_REFERENCE[title].copy()
+        data["source"] = "manual_reference_exact"
+        return data
 
     # 3. coincidencia parcial manual
     for key, data in MARKET_REFERENCE.items():
         if key in title or title in key:
-            return data
+            result = data.copy()
+            result["source"] = "manual_reference_partial"
+            return result
 
     # 4. sin datos
     return {
@@ -67,4 +72,5 @@ def estimate_market_price(product_title: str):
         "max_price": 0,
         "avg_price": 0,
         "competition": 0,
+        "source": "no_data",
     }
