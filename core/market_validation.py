@@ -44,27 +44,32 @@ def normalize_text(text: str) -> str:
     return text.strip().lower()
 
 def simplify_title_for_market(title: str) -> str:
-    text = normalize_text(title)
+    title = title.lower()
 
-    stopwords = [
-        "new", "free", "shipping", "original", "real", "time",
-        "business", "travel", "sold", "preview", "similar", "items",
-        "ear", "buds", "headphones", "wireless", "with", "for",
-        "the", "and", "ows", "bt", "5.4"
+    # eliminar basura
+    remove_words = [
+        "oem", "original", "for", "with", "new",
+        "free shipping", "sale", "hot", "2021", "2022", "2023"
     ]
 
-    words = []
-    for word in text.split():
-        clean = word.strip(".,:-_()[]{}!$%")
-        if len(clean) < 3:
-            continue
-        if clean in stopwords:
-            continue
-        if clean.isdigit():
-            continue
-        words.append(clean)
+    for word in remove_words:
+        title = title.replace(word, "")
 
-    return " ".join(words[:5])
+    # traducciones clave
+    replacements = {
+        "crankshaft position sensor": "sensor cigüeñal",
+        "camshaft position sensor": "sensor arbol de levas",
+        "sensor": "sensor",
+        "nissan": "nissan"
+    }
+
+    for eng, esp in replacements.items():
+        if eng in title:
+            return f"{esp} nissan"
+
+    # fallback simple
+    words = title.split()
+    return " ".join(words[:3])
 
 
 def estimate_market_price(product_title: str): 
