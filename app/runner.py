@@ -41,9 +41,15 @@ def run_pipeline():
         else:
             multiplier = 1.8
 
-        product.estimated_sale_price = round(
-            calculate_estimated_sale_price(product.price, multiplier), 2
-        )   
+        raw_sale_price = calculate_estimated_sale_price(product.price, multiplier)
+
+        # Ajuste con mercado real
+        if product.market_avg_price > 0:
+            product.estimated_sale_price = round(
+                min(raw_sale_price, product.market_avg_price * 0.95), 2
+            )
+        else:
+            product.estimated_sale_price = round(raw_sale_price, 2)
 
         product.estimated_profit = round(
             calculate_profit(product.price, product.estimated_sale_price), 2
