@@ -380,11 +380,12 @@
 
 from app.runner import run_pipeline
 
-
 if __name__ == "__main__":
-    keyword = "auto"
-    candidates = run_pipeline(keyword)
+    keyword = "audifonos"
+    source_name = "aliexpress"
+
+    candidates = run_pipeline(keyword, source_name)
+
     print(f"Candidatos: {len(candidates)}")
     for product in candidates[:5]:
         print(product.title, product.estimated_margin, product.buy_index)
-

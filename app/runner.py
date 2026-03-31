@@ -9,10 +9,14 @@ from core.scoring import (
     final_decision,
 )
 from sources.catalog import get_products_by_keyword
+from sources.aliexpress import search_aliexpress_products
 from core.market_validation import estimate_market_price
 
-def run_pipeline(keyword: str = "auto"):
-    products = get_products_by_keyword(keyword)
+def run_pipeline(keyword: str = "auto", source_name: str = "catalog"):
+    if source_name == "aliexpress":
+        products = search_aliexpress_products(keyword)
+    else:
+        products = get_products_by_keyword(keyword)
 
     candidates = []
 

@@ -78,6 +78,8 @@ def search_mercadolibre_prices(query: str) -> dict:
     prices = prices[:20]
 
     if not prices:
+        with open("ml_debug.html", "w", encoding="utf-8") as f:
+            f.write(response.text)
         return {
             "min_price": 0,
             "max_price": 0,
