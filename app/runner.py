@@ -10,7 +10,7 @@ from core.scoring import (
 )
 from sources.catalog import get_products_by_keyword
 from sources.aliexpress import search_aliexpress_products
-from core.market_validation import estimate_market_price
+from core.market_validation import estimate_market_price, simplify_title_for_market
 
 def run_pipeline(keyword: str = "auto", source_name: str = "catalog"):
     if source_name == "aliexpress":
@@ -54,6 +54,7 @@ def run_pipeline(keyword: str = "auto", source_name: str = "catalog"):
         product.market_source = market_data["source"]
         product.market_debug = market_data.get("debug", "")
         product.market_url = market_data.get("url", "")
+        product.market_query = simplify_title_for_market(product.title)
 
 
         raw_sale_price = calculate_estimated_sale_price(product.price, multiplier)
@@ -115,5 +116,6 @@ def run_pipeline(keyword: str = "auto", source_name: str = "catalog"):
         print("🧭 Fuente mercado:", product.market_source)
         print("🛠 Debug mercado:", product.market_debug)
         print("🔗 URL mercado:", product.market_url)
+        print("🔎 Query mercado:", product.market_query)
 
     return candidates

@@ -43,12 +43,36 @@ MARKET_REFERENCE = {
 def normalize_text(text: str) -> str:
     return text.strip().lower()
 
+def simplify_title_for_market(title: str) -> str:
+    text = normalize_text(title)
 
-def estimate_market_price(product_title: str):
+    stopwords = [
+        "new", "free", "shipping", "original", "real", "time",
+        "business", "travel", "sold", "preview", "similar", "items",
+        "ear", "buds", "headphones", "wireless", "with", "for",
+        "the", "and", "ows", "bt", "5.4"
+    ]
+
+    words = []
+    for word in text.split():
+        clean = word.strip(".,:-_()[]{}!$%")
+        if len(clean) < 3:
+            continue
+        if clean in stopwords:
+            continue
+        if clean.isdigit():
+            continue
+        words.append(clean)
+
+    return " ".join(words[:5])
+
+
+def estimate_market_price(product_title: str): 
     title = normalize_text(product_title)
+    market_query = simplify_title_for_market(product_title)
 
     # 1. intentar Mercado Libre real
-    real_market = search_mercadolibre_prices(title)
+    real_market = search_mercadolibre_prices(market_query)
     if real_market["avg_price"] > 0:
         return real_market
 
