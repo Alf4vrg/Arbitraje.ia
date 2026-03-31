@@ -9,11 +9,11 @@ from core.scoring import (
     initial_decision,
     final_decision,
 )
-from sources.manual import obtener_productos_manual
+from sources.catalog import get_products_by_keyword
 from core.market_validation import estimate_market_price
 
-def run_pipeline():
-    products = obtener_productos_manual()
+def run_pipeline(keyword: str = "auto"):
+    products = get_products_by_keyword(keyword)
 
     candidates = []
 
