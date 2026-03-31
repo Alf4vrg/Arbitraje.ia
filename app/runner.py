@@ -9,7 +9,7 @@ from core.scoring import (
     initial_decision,
 )
 from sources.manual import obtener_productos_manual
-
+from core.market_validation import estimate_market_price
 
 def run_pipeline():
     products = obtener_productos_manual()
@@ -48,6 +48,12 @@ def run_pipeline():
         product.estimated_profit = round(
             calculate_profit(product.price, product.estimated_sale_price), 2
         )
+        market_data = estimate_market_price(product.title)
+
+        product.market_min_price = market_data["min_price"]
+        product.market_max_price = market_data["max_price"]
+        product.market_avg_price = market_data["avg_price"]
+        product.market_competition = market_data["competition"]
 
         product.estimated_margin = calculate_margin(
             product.price, product.estimated_sale_price
@@ -88,5 +94,8 @@ def run_pipeline():
         print("🔗 Link:", product.product_url)
         print("🖼 Imagen:", product.image_url)
         print("-" * 30)
+        print("🛒 Mercado MX:", product.market_min_price, "-", product.market_max_price)
+        print("📈 Promedio MX:", round(product.market_avg_price, 2))
+        print("📊 Competencia:", product.market_competition)
 
     return candidates
