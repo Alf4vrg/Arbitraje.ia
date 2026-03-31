@@ -71,34 +71,44 @@ def simplify_title_for_market(title: str) -> str:
     words = title.split()
     return " ".join(words[:3])
 
-
-def estimate_market_price(product_title: str): 
+def estimate_market_price(product_title: str):
     title = normalize_text(product_title)
     market_query = simplify_title_for_market(product_title)
 
-    # 1. intentar Mercado Libre real
     real_market = search_mercadolibre_prices(market_query)
+
+    # si Mercado Libre sí encontró precios, usar eso
     if real_market["avg_price"] > 0:
         return real_market
 
-    # 2. coincidencia exacta manual
+    # si Mercado Libre respondió algo útil de debug/error, consérvalo
+    if real_market.get("source") in ["mercadolibre_api_no_prices", "mercadolibre_error"]:
+        return real_market
+
+    # coincidencia exacta manual
     if title in MARKET_REFERENCE:
         data = MARKET_REFERENCE[title].copy()
         data["source"] = "manual_reference_exact"
+        data["debug"] = ""
+        data["url"] = ""
         return data
 
-    # 3. coincidencia parcial manual
+    # coincidencia parcial manual
     for key, data in MARKET_REFERENCE.items():
         if key in title or title in key:
             result = data.copy()
             result["source"] = "manual_reference_partial"
+            result["debug"] = ""
+            result["url"] = ""
             return result
 
-    # 4. sin datos
+    # sin datos
     return {
         "min_price": 0,
         "max_price": 0,
         "avg_price": 0,
         "competition": 0,
         "source": "no_data",
+        "debug": "",
+        "url": "",
     }
