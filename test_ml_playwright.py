@@ -25,6 +25,8 @@ def search_mercadolibre_prices_playwright(query: str):
             return {
                 "ok": True,
                 "html_length": len(html),
+                "has_results": "ui-search-result" in html,
+                "has_price": "$" in html,
                 "url": url,
             }
 
