@@ -13,21 +13,23 @@ def search_mercadolibre_prices_playwright(query: str):
                 ],
             )
 
-            page = browser.new_page()
-            url = f"https://listado.mercadolibre.com.mx/{query.replace(' ', '-')}"
-
             page.goto(url, wait_until="domcontentloaded", timeout=30000)
-            page.wait_for_selector("li.ui-search-layout__item", timeout=15000)
+            page.wait_for_timeout(5000)
 
+            title = page.title()
             html = page.content()
+            page.screenshot(path="ml_test.png", full_page=True)
+
             browser.close()
 
             return {
                 "ok": True,
+                "title": title,
                 "html_length": len(html),
-                "has_results": "ui-search-result" in html,
+                "has_results": "ui-search-layout__item" in html,
                 "has_price": "$" in html,
                 "url": url,
+                "html_preview": html[:1000]
             }
 
     except Exception as e:
