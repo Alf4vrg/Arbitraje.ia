@@ -27,6 +27,15 @@ jobs:
       - name: Probar Playwright Mercado Libre
         run: python test_ml_playwright.py    
 
+      - name: Subir artifacts Mercado Libre
+        uses: actions/upload-artifact@v4
+        with:
+          name: mercadolibre-debug
+          path: |
+            ml_home.html
+            ml_home.png
+          if-no-files-found: ignore
+
       - name: Ejecutar script
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
