@@ -60,6 +60,7 @@ def test_home():
                 "has_nav_input": "nav-search-input" in html,
                 "has_search": "search" in html.lower(),
                 "has_results": "ui-search-layout__item" in html,
+                "is_verification": "account-verification" in current_url,
                 "url": current_url,
                 "html_preview": html[:1200],
             }
