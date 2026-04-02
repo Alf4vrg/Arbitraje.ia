@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright
 
-def search_mercadolibre_prices_playwright(query: str):
+def test_home():
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(
@@ -14,21 +14,12 @@ def search_mercadolibre_prices_playwright(query: str):
             )
 
             page = browser.new_page()
-
-            # entra a Mercado Libre home
             page.goto("https://www.mercadolibre.com.mx/", wait_until="domcontentloaded", timeout=30000)
-            page.wait_for_timeout(3000)
-
-            # escribe como usuario real
-            page.locator('input.nav-search-input').fill(query)
-            page.locator('input.nav-search-input').press("Enter")
-
-            page.wait_for_timeout(6000)
+            page.wait_for_timeout(5000)
 
             title = page.title()
             html = page.content()
-            current_url = page.url
-            page.screenshot(path="ml_test.png", full_page=True)
+            page.screenshot(path="ml_home.png", full_page=True)
 
             browser.close()
 
@@ -36,10 +27,10 @@ def search_mercadolibre_prices_playwright(query: str):
                 "ok": True,
                 "title": title,
                 "html_length": len(html),
-                "has_results": "ui-search-layout__item" in html,
-                "has_price": "$" in html,
-                "url": current_url,
-                "html_preview": html[:1000],
+                "has_nav_input": "nav-search-input" in html,
+                "has_search": "search" in html.lower(),
+                "url": "https://www.mercadolibre.com.mx/",
+                "html_preview": html[:1200],
             }
 
     except Exception as e:
@@ -48,8 +39,6 @@ def search_mercadolibre_prices_playwright(query: str):
             "error": str(e),
         }
 
-query = "sensor nissan"
-result = search_mercadolibre_prices_playwright(query)
+result = test_home()
 
-print("QUERY:", query, flush=True)
 print("RESULT:", result, flush=True)
