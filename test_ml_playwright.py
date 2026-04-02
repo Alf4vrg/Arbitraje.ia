@@ -13,6 +13,9 @@ def search_mercadolibre_prices_playwright(query: str):
                 ],
             )
 
+            page = browser.new_page()
+            url = f"https://listado.mercadolibre.com.mx/{query.replace(' ', '-')}"
+
             page.goto(url, wait_until="domcontentloaded", timeout=30000)
             page.wait_for_timeout(5000)
 
@@ -29,7 +32,7 @@ def search_mercadolibre_prices_playwright(query: str):
                 "has_results": "ui-search-layout__item" in html,
                 "has_price": "$" in html,
                 "url": url,
-                "html_preview": html[:1000]
+                "html_preview": html[:1000],
             }
 
     except Exception as e:
