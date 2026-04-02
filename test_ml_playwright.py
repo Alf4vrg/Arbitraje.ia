@@ -32,8 +32,18 @@ def test_home():
             page.goto(url, wait_until="networkidle", timeout=45000)
             page.wait_for_timeout(6000)
 
+            # 👇 AQUI VA LO NUEVO
+            search_box = page.locator("input[name='as_word']")
+            search_box.fill("sensor nissan")
+            search_box.press("Enter")
+
+            page.wait_for_timeout(5000)
+
+            # 👇 ya después sigue lo que ya tienes
             title = page.title()
             html = page.content()
+
+
             current_url = page.url
 
             with open("ml_home.html", "w", encoding="utf-8") as f:
