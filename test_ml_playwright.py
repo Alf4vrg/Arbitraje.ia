@@ -14,13 +14,20 @@ def search_mercadolibre_prices_playwright(query: str):
             )
 
             page = browser.new_page()
-            url = f"https://listado.mercadolibre.com.mx/{query.replace(' ', '-')}"
 
-            page.goto(url, wait_until="domcontentloaded", timeout=30000)
-            page.wait_for_timeout(5000)
+            # entra a Mercado Libre home
+            page.goto("https://www.mercadolibre.com.mx/", wait_until="domcontentloaded", timeout=30000)
+            page.wait_for_timeout(3000)
+
+            # escribe como usuario real
+            page.locator('input.nav-search-input').fill(query)
+            page.locator('input.nav-search-input').press("Enter")
+
+            page.wait_for_timeout(6000)
 
             title = page.title()
             html = page.content()
+            current_url = page.url
             page.screenshot(path="ml_test.png", full_page=True)
 
             browser.close()
@@ -31,7 +38,7 @@ def search_mercadolibre_prices_playwright(query: str):
                 "html_length": len(html),
                 "has_results": "ui-search-layout__item" in html,
                 "has_price": "$" in html,
-                "url": url,
+                "url": current_url,
                 "html_preview": html[:1000],
             }
 
