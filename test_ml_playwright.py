@@ -17,7 +17,7 @@ def search_mercadolibre_prices_playwright(query: str):
             url = f"https://listado.mercadolibre.com.mx/{query.replace(' ', '-')}"
 
             page.goto(url, wait_until="domcontentloaded", timeout=30000)
-            page.wait_for_timeout(4000)
+            page.wait_for_selector("li.ui-search-layout__item", timeout=15000)
 
             html = page.content()
             browser.close()
